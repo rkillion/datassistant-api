@@ -1,24 +1,4 @@
-# README
+# Datassistant
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Datassistant is a web application that allows users to easily and visually manage relational data. It functions like a spreadsheet but with better visualization of the data, more interactivity, and more repeat-functionality for the user.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
