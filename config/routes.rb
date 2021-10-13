@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :types
   resources :datassistants
   get "/me", to: "users#show"
   post "/signup", to: "users#create"
