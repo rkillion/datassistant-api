@@ -1,7 +1,21 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+puts "Seeding..."
+
+BaseType.create(
+    title_singular: "Text Field",
+    title_plural: "Text Fields",
+    value_type: "string"
+)
+
+BaseType.create(
+    title_singular: "Number Field",
+    title_plural: "Number Fields",
+    value_type: "number"
+)
+
+BaseType.create(
+    title_singular: "True-False Field",
+    title_plural: "True-False Fields",
+    value_type: "boolean"
+)
+
+puts "Done seeding!"
