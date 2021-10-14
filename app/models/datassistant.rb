@@ -4,7 +4,7 @@ class Datassistant < ApplicationRecord
   has_many :types, dependent: :destroy
   has_many :logs, dependent: :destroy
 
-  def custom_base_types
+  def sub_types
     self.types.filter{|type| type.relationships.include?("base")}
   end
 

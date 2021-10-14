@@ -1,3 +1,3 @@
 class DatassistantSerializer < ActiveModel::Serializer
-  attributes :id, :title, :custom_base_types
+  attributes :id, :title, :sub_types
 end

@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::API
     include ActionController::Cookies
+    rescue_from ActiveRecord::RecordNotFound, with: :record_not_found_response
 
     private
 
@@ -8,7 +9,11 @@ class ApplicationController < ActionController::API
     end
     
     def confirm_authentication
-        return render json: { error: "You must be logged in to do that." }, status: :unauthorized unless current_user
+        return render json: { errors: ["You must be logged in to do that."] }, status: :unauthorized unless current_user
     end 
+
+    def record_not_found_response
+        return render json: { errors: ["Not found"] }, status: 404
+    end
     
 end
