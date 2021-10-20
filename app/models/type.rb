@@ -1,5 +1,6 @@
 class Type < ApplicationRecord
   belongs_to :datassistant
+  validates :title_singular, :title_plural, presence: true
   has_many :logs, foreign_key: :type_a_id, dependent: :destroy
   has_many :reverse_logs, class_name: "Log", foreign_key: :type_b_id, dependent: :destroy
 
@@ -8,9 +9,13 @@ class Type < ApplicationRecord
     logs.map{ |log| log.relationship }
   end
 
-  def sub_types
-    logs = Log.where(type_a_id: self.id).where(relationship: "child")
+  def get_relatives(relationship)
+    logs = Log.where(type_a_id: self.id).where(relationship: relationship)
     logs.map{|log| Type.find(log.type_b_id)}
+  end
+
+  def sub_types
+    self.get_relatives("child")
   end
 
   def make_subtype(singular,plural)
@@ -38,12 +43,46 @@ class Type < ApplicationRecord
     )
   end
 
-  private
+  # parent_path returns an array types {id: 0,title_singular: "",title_plural: ""} that are parent types of the type starting with the oldest and ending with the most recent
 
-  def corresponding_relative
-    {
-      parent: "child",
-      child: "parent"
-    }
+  def parent_types
+    self.get_relatives("parent")
   end
+
+  def parent_path
+    @path = []
+    @parent = self.parent_types[0]
+    while @parent
+      @path.unshift(@parent)
+      @parent = @parent.parent_types[0]
+    end
+    @path
+  end
+
+  def make_instance(name)
+    instance = Instance.create(
+      datassistant_id: self.datassistant_id,
+      name: name
+    )
+    Log.create(
+      relationship: "instance",
+      type_a_id: self.id,
+      instance_a_id: instance.id,
+      datassistant_id: self.datassistant_id
+    )
+    self.parent_path.each{|type|
+    Log.create(
+      relationship: "instance",
+      type_a_id: type.id,
+      instance_a_id: instance.id,
+      datassistant_id: self.datassistant_id
+    )}
+    instance
+  end
+
+  def instances
+    logs = Log.where(type_a_id: self.id).where(relationship: "instance")
+    logs.map{|log| Instance.find(log.instance_a_id)}
+  end
+
 end

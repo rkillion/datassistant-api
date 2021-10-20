@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_14_151401) do
+ActiveRecord::Schema.define(version: 2021_10_18_132955) do
 
   create_table "base_types", force: :cascade do |t|
     t.string "title_singular"
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 2021_10_14_151401) do
     t.string "value_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "datassistant_id"
   end
 
   create_table "datassistants", force: :cascade do |t|
@@ -26,6 +27,14 @@ ActiveRecord::Schema.define(version: 2021_10_14_151401) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_datassistants_on_user_id"
+  end
+
+  create_table "instances", force: :cascade do |t|
+    t.string "name"
+    t.integer "datassistant_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["datassistant_id"], name: "index_instances_on_datassistant_id"
   end
 
   create_table "logs", force: :cascade do |t|
@@ -37,6 +46,10 @@ ActiveRecord::Schema.define(version: 2021_10_14_151401) do
     t.integer "datassistant_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "base_type_a_id"
+    t.integer "base_type_b_id"
+    t.integer "instance_a_id"
+    t.integer "instance_b_id"
     t.index ["datassistant_id"], name: "index_logs_on_datassistant_id"
   end
 
@@ -57,6 +70,7 @@ ActiveRecord::Schema.define(version: 2021_10_14_151401) do
   end
 
   add_foreign_key "datassistants", "users"
+  add_foreign_key "instances", "datassistants"
   add_foreign_key "logs", "datassistants"
   add_foreign_key "types", "datassistants"
 end

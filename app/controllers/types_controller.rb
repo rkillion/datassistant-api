@@ -5,7 +5,10 @@ class TypesController < ApplicationController
     def show
         type = Type.find(params[:id])
         if current_user.id == type.datassistant.user.id
-            
+            render json: type
+        else
+            render json: {errors: ["Not found"]}, status: 404 
+        end
     end
 
 end
