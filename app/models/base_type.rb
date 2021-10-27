@@ -60,4 +60,12 @@ class BaseType < ApplicationRecord
         @path
     end
 
+    def log_entries
+        if self.get_datassistant
+            Log.where(base_type_a_id: self.id,datassistant_id: self.get_datassistant.id,reference: "base_type")
+        else
+            []
+        end
+    end
+
 end

@@ -38,7 +38,8 @@ class BaseTypesController < ApplicationController
         value_type: base_type.value_type,
         datassistant_id: base_type.datassistant_id,
         sub_types: sub_types,
-        parent_path: parent_path
+        parent_path: parent_path,
+        log_entries: base_type.log_entries
       }
     end
 

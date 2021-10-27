@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_18_132955) do
+ActiveRecord::Schema.define(version: 2021_10_21_134444) do
 
   create_table "base_types", force: :cascade do |t|
     t.string "title_singular"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 2021_10_18_132955) do
     t.integer "base_type_b_id"
     t.integer "instance_a_id"
     t.integer "instance_b_id"
+    t.string "reference"
     t.index ["datassistant_id"], name: "index_logs_on_datassistant_id"
   end
 
